@@ -31,9 +31,11 @@ export class AuthService {
       // @ts-expect-error
       delete user.password;
 
+      // 3. return the saved user and a token
+      const token = await this.signToken(user.id, user.email);
       return {
         ...user,
-        token: await this.signToken(user.id, user.email),
+        token,
       };
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
