@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { JwtGuard } from 'src/auth/guard';
 import { TransactionsService } from './transactions.service';
-import { TransactionDto } from './dto/transaction.dto';
+import { TransactionDto } from './dto';
 import { GetUser } from 'src/auth/decorator';
 
 @UseGuards(JwtGuard)
