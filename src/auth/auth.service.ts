@@ -42,6 +42,9 @@ export class AuthService {
         if (error.code === 'P2002') {
           throw new ForbiddenException(
             'An account with this email already exists',
+            {
+              description: 'An account with this email already exists',
+            },
           );
         }
       }
@@ -57,14 +60,18 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new ForbiddenException('Invalid credentials');
+      throw new ForbiddenException('Invalid credentials', {
+        description: 'Invalid email or password',
+      });
     }
 
     // 2. verify password
     const pwMatches = await argon2.verify(user.password, dto.password);
 
     if (!pwMatches) {
-      throw new ForbiddenException('Invalid credentials');
+      throw new ForbiddenException('Invalid credentials', {
+        description: 'Invalid email or password',
+      });
     }
 
     // 3. generate jwt token
@@ -74,7 +81,9 @@ export class AuthService {
     delete user.password;
 
     return {
-      ...user,
+      data: {
+        ...user,
+      },
       token,
     };
   }
