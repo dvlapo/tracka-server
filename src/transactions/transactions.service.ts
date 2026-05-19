@@ -52,7 +52,10 @@ export class TransactionsService {
           },
         },
       });
-      return { transaction };
+      return {
+        message: 'Transaction created successfully',
+        transaction,
+      };
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === 'P2003') {
@@ -89,7 +92,10 @@ export class TransactionsService {
           },
         },
       });
-      return { transaction: updatedTransaction };
+      return {
+        message: 'Transaction updated successfully',
+        transaction: updatedTransaction,
+      };
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === 'P2003') {
@@ -120,6 +126,7 @@ export class TransactionsService {
       await this.prisma.transaction.delete({
         where: { id },
       });
+      return { message: 'Transaction deleted successfully' };
     } catch (error) {
       throw new InternalServerErrorException('Failed to delete transaction');
     }
