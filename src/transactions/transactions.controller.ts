@@ -12,7 +12,10 @@ import { JwtGuard } from 'src/auth/guard';
 import { TransactionsService } from './transactions.service';
 import { TransactionDto } from './dto';
 import { GetUser } from 'src/auth/decorator';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('transactions')
+@ApiBearerAuth('JWT-auth')
 @UseGuards(JwtGuard)
 @Controller('transactions')
 export class TransactionsController {
